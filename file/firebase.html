@@ -1,0 +1,83 @@
+<html>
+    <body>
+        <ul id="list"> 
+
+
+
+
+        </ul>
+
+        
+            <script src="https://www.gstatic.com/firebasejs/9.8.4/firebase-app.js"></script>
+            <script src="https://www.gstatic.com/firebasejs/9.8.4/firebase-auth.js"></script>
+            <script src="https://www.gstatic.com/firebasejs/9.8.4/firebase-database.js"></script>
+          
+          
+            <script id="MainScript">
+              const firebaseConfig = {
+                apiKey: "AIzaSyAZy-tgh_NdTQDAU6izU0YWWb1c9clsMes",
+                authDomain: "website-6473d.firebaseapp.com",
+                projectId: "website-6473d",
+                storageBucket: "website-6473d.appspot.com",
+                messagingSenderId: "325012248638",
+                appId: "1:325012248638:web:cb48163354172669f4196f",
+                measurementId: "G-NJTSBMMM4D"
+              };
+          
+              // Initialize Firebase
+              const app = initializeApp(firebaseConfig);
+              const analytics = getAnalytics(app);
+            
+          
+          
+            var stdNo=0;
+            function addItemsToList(name,rollNo,sec,gen){
+            var ul= document.getElementById('list');
+            var header= document.createElement('h2');
+            var _name= document.createElement('li');
+            var _rollNo= document.createElement('li');
+            var _sec= document.createElement('li');
+            var _gen= document.createElement('li');
+          
+            header.innerHTML='Student-'+(++stdNo);
+          
+            _name.innerHTML='Name: '+name;
+            _rollNo.innerHTML='Roll No: '+rollNo;
+            _sec.innerHTML='Section: '+sec;
+            _gen.innerHTML='Gender: '+gen;
+          
+            ul.appendChild(header);
+            ul.appendChild(_name);
+            ul.appendChild(-rollNo);
+            ul.appendChild(_sec);
+            ul.appendChild(_gen);
+          
+            }
+            function FetchAllData(){
+              firebase.database().ref('student').once('value',function(snapshot){
+                snapshot.forEach(
+                  function(ChildSnapshot){
+                    let name=ChildSnapshot.val().NameOfStudent;
+                    let roll=ChildSnapshot.val().RollNO;
+                    let sec=ChildSnapshot.val().section;
+                    let gen=ChildSnapshot.val().Gender;
+                    addItemsToList(name,rollNo,sec,gen);
+          
+                  }
+                )
+              })
+          
+            }
+          
+          window.onload(FetchAllData());
+          
+          
+          
+          
+          
+            </script>
+          
+
+       
+    </body>
+</html>
